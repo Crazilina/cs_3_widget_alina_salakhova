@@ -47,3 +47,16 @@ def mask_card_info(info):
         return info
 
 
+def display_transaction(transaction):
+    """
+    Выводит информацию об одной операции в заданном формате.
+    """
+    date = datetime.strptime(transaction['date'], '%Y-%m-%dT%H:%M:%S.%f').strftime('%d.%m.%Y')
+    description = transaction['description']
+    from_account = mask_card_info(transaction.get('from', ''))
+    to_account = mask_card_info(transaction.get('to', ''))
+    amount = transaction['operationAmount']['amount']
+    currency = transaction['operationAmount']['currency']['name']
+    output = f"{date} {description}\n{from_account} -> {to_account}\n{amount} {currency}\n"
+
+    return output
