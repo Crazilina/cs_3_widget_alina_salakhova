@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.utils import load_transactions, get_last_five_executed
+from src.utils import load_transactions, get_last_five_executed, display_transaction
 
 TEST_JSON_FILE = 'src/operations.json'  # путь к файлу с банковскими данными
 
@@ -27,4 +27,19 @@ def test_get_last_five_executed():
     for i in range(len(last_five) - 1):
         assert convert_date(last_five[i]) >= convert_date(last_five[i + 1])
 
+
+def test_display_transaction():
+    transaction = {
+        "date": "2021-01-01T12:00:00.000000",
+        "description": "Test Description",
+        "from": "1234567890123456",
+        "to": "Счет 987654321",
+        "operationAmount": {
+            "amount": "1000",
+            "currency": {"name": "USD"}
+        }
+    }
+    output = display_transaction(transaction)
+    expected_output = "01.01.2021 Test Description\n1234567890123456 -> Счет **4321\n1000 USD\n"
+    assert output == expected_output
 
