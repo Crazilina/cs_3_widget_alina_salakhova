@@ -1,5 +1,6 @@
+import pytest
 from datetime import datetime
-from src.utils import load_transactions, get_last_five_executed, display_transaction
+from src.utils import load_transactions, get_last_five_executed, display_transaction, mask_card_info
 
 TEST_JSON_FILE = 'src/operations.json'  # путь к файлу с банковскими данными
 
@@ -43,3 +44,13 @@ def test_display_transaction():
     expected_output = "01.01.2021 Test Description\n1234567890123456 -> Счет **4321\n1000 USD\n"
     assert output == expected_output
 
+
+@pytest.mark.parametrize("input_data, expected", [
+    ("Visa Classic 1234567890123456", "Visa Classic 1234 56** **** 3456"),
+    ("Счет 123456789", "Счет **6789"),
+    ("", ""),
+    ("Visa", "Visa"),
+    ("SomeRandomText 123", "SomeRandomText 123")
+])
+def test_mask_card_info(input_data, expected):
+    assert mask_card_info(input_data) == expected
