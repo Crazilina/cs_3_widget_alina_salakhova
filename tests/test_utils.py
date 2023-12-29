@@ -16,3 +16,15 @@ def test_sort_transactions_by_date():
     sorted_transactions = sorted(executed_transactions, key=convert_date, reverse=True)
     last_five = get_last_five_executed(transactions)[:5]
     assert last_five == sorted_transactions[:5]
+
+
+def test_get_last_five_executed():
+    """ Тестирование получения последних пяти выполненных транзакций. """
+    transactions = load_transactions(TEST_JSON_FILE)
+    last_five = get_last_five_executed(transactions)
+    assert len(last_five) <= 5
+    assert all(transaction['state'] == 'EXECUTED' for transaction in last_five)
+    for i in range(len(last_five) - 1):
+        assert convert_date(last_five[i]) >= convert_date(last_five[i + 1])
+
+
