@@ -8,9 +8,9 @@
 
 1. Клонируйте репозиторий:
 
-   git clone <URL репозитория-добавить когда станет доступно>
+   git clone <https://github.com/Crazilina/cs_3_widget_alina_salakhova>
    
-   cd widget
+   cd cs_3_widget_alina_salakhova
 
 
 2. Установите зависимости:
